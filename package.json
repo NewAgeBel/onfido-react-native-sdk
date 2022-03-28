@@ -1,5 +1,5 @@
 {
-  "name": "@newagebel/onfido-react-native-sdk",
+  "name": "@newagebel/react-native-onfido-sdk",
   "title": "React Native Onfido Sdk",
   "version": "5.1.1",
   "description": "Onfido React Native SDK",
@@ -42,8 +42,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NewAgeBel/onfido-react-native-sdk.git",
-    "baseUrl": "https://github.com/NewAgeBel/onfido-react-native-sdk"
+    "url": "git+https://github.com/NewAgeBel/react-native-onfido-sdk.git",
+    "baseUrl": "https://github.com/NewAgeBel/react-native-onfido-sdk"
   },
   "keywords": [
     "react-native",
