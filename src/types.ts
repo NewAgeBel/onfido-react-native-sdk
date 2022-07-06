@@ -553,6 +553,7 @@ export type OnfidoResult = {
 export type OnfidoConfig = {
   sdkToken: string;
   flowSteps: OnfidoFlowSteps;
+  workflowRunId: string | null | undefined;
 };
 
 export interface OnfidoError extends Error {
