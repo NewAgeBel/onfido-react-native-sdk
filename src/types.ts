@@ -533,6 +533,7 @@ export type OnfidoFlowSteps = {
   localisation?: {
     ios_strings_file_name?: string;
   };
+  withNFCReadBetaFeatureEnabled?: boolean;
 };
 
 export type OnfidoResult = {
@@ -548,6 +549,7 @@ export type OnfidoResult = {
     id: string;
     variant: OnfidoCaptureType;
   };
+  nfcMediaId: any;
 };
 
 export type OnfidoConfig = {

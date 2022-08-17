@@ -58,7 +58,8 @@ class OnfidoSdkTests : XCTestCase {
                 ],
                 "captureFace": [
                     "type": "PHOTO",
-                ]
+                ],
+                "withNFCReadBetaFeatureEnabled": NSNumber(value:false)
             ]
         ]
         
