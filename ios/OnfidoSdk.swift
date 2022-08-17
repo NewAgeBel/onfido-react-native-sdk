@@ -125,10 +125,6 @@ public func buildOnfidoConfig(config:NSDictionary, appearance: Appearance) throw
         onfidoConfig = onfidoConfig.withWelcomeStep()
     }
 
-    if flowSteps?["withNFCReadBetaFeatureEnabled"] as? Bool == true {
-        onfidoConfig = onfidoConfig.withNFCReadBetaFeatureEnabled()
-    }
-
     if let docType = captureDocument?["docType"] as? String, let countryCode = captureDocument?["countryCode"] as? String {
         switch docType {
         case "PASSPORT":
@@ -151,6 +147,8 @@ public func buildOnfidoConfig(config:NSDictionary, appearance: Appearance) throw
     } else if captureDocument != nil {
         onfidoConfig = onfidoConfig.withDocumentStep()
     }
+
+    onfidoConfig = onfidoConfig.withNFCReadBetaFeatureEnabled()
 
     if let faceVariant = captureFace?["type"] as? String {
         if faceVariant == "VIDEO" {

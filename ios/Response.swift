@@ -21,19 +21,13 @@ func createResponse(_ results: [OnfidoResult], faceVariant: String?) -> [String:
         if case OnfidoResult.face = result { return true }
         return false
     }).first
-    
-    let nfcMediaId: OnfidoResult? = results.filter({ result in
-        if case OnfidoResult.nfcMediaId = result { return true }
-        return false
-    }).first
-
-    RNResponse["nfcMediaId"] = nfcMediaId
 
     if let documentUnwrapped = document, case OnfidoResult.document(let documentResponse) = documentUnwrapped {
         RNResponse["document"] = ["front": ["id": documentResponse.front.id]]
         if (documentResponse.back?.id != documentResponse.front.id) {
             RNResponse["document"]?["back"] = ["id": documentResponse.back?.id]
         }
+        RNResponse["nfcMediaId"] = ["id": documentResponse.nfcMediaId]
     }
     
     if let faceUnwrapped = face, case OnfidoResult.face(let faceResponse) = faceUnwrapped {
@@ -42,7 +36,7 @@ func createResponse(_ results: [OnfidoResult], faceVariant: String?) -> [String:
         if let faceVariant = faceVariant {
             faceResponse["variant"] = faceVariant
         }
-        
+
         RNResponse["face"] = faceResponse
     }
     
