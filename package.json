@@ -1,7 +1,7 @@
 {
   "name": "@newagebel/react-native-onfido-sdk",
   "title": "React Native Onfido Sdk",
-  "version": "5.4.6-beta.2",
+  "version": "5.4.6-beta.3",
   "description": "Onfido React Native SDK",
   "main": "index.ts",
   "scripts": {
