@@ -16,10 +16,7 @@ import com.onfido.android.sdk.capture.OnfidoConfig;
 import com.onfido.android.sdk.capture.OnfidoFactory;
 import com.onfido.android.sdk.capture.errors.EnterpriseFeatureNotEnabledException;
 import com.onfido.android.sdk.capture.errors.EnterpriseFeaturesInvalidLogoCobrandingException;
-import com.onfido.android.sdk.capture.errors.EnterpriseFeatureNotEnabledException;
-import com.onfido.android.sdk.capture.errors.EnterpriseFeaturesInvalidLogoCobrandingException;
-import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureStep;
-import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureVariant;
+import com.onfido.android.sdk.capture.ui.camera.face.stepbuilder.FaceCaptureStepBuilder;
 import com.onfido.android.sdk.capture.ui.options.CaptureScreenStep;
 import com.onfido.android.sdk.capture.ui.options.FlowStep;
 import com.onfido.android.sdk.capture.utils.CountryCode;
@@ -247,15 +244,17 @@ public class OnfidoSdkModule extends ReactContextBaseJavaModule {
                 if (captureFaceTypeExists) {
                     final String captureFaceType = captureFace.getString("type");
                     if (captureFaceType.equals("PHOTO")) {
-                        flowStepList.add(new FaceCaptureStep(FaceCaptureVariant.PHOTO));
+                        flowStepList.add(FaceCaptureStepBuilder.forPhoto().build());
                     } else if (captureFaceType.equals("VIDEO")) {
-                        flowStepList.add(new FaceCaptureStep(FaceCaptureVariant.VIDEO));
+                        flowStepList.add(FaceCaptureStepBuilder.forVideo().build());
+                    } else if (captureFaceType.equals("MOTION")) {
+                        flowStepList.add(FaceCaptureStepBuilder.forMotion().build());
                     } else {
                         throw new Exception("Invalid face capture type.  \"type\" must be VIDEO or PHOTO.");
                     }
                 } else {
                     // Default face capture type is photo.
-                    flowStepList.add(new FaceCaptureStep(FaceCaptureVariant.PHOTO));
+                    flowStepList.add(FaceCaptureStepBuilder.forPhoto().build());
                 }
             }
 
