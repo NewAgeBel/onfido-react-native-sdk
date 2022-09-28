@@ -30,7 +30,7 @@ class OnfidoSdkActivityEventListener extends BaseActivityEventListener {
 
     /**
      * Sets the current promise to be resolved.
-     * 
+     *
      * @param currentPromise the promise to set
      */
     public void setCurrentPromise(Promise currentPromise) {
@@ -80,7 +80,6 @@ class OnfidoSdkActivityEventListener extends BaseActivityEventListener {
             }
         });
     }
-
 
     private void handleOnfidoChecks(int resultCode, Intent data) {
         client.handleActivityResult(resultCode, data, new Onfido.OnfidoResultListener() {
