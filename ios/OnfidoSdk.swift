@@ -153,6 +153,8 @@ public func buildOnfidoConfig(config:NSDictionary, appearance: Appearance) throw
             onfidoConfig = onfidoConfig.withFaceStep(ofVariant: .video(withConfiguration: VideoStepConfiguration(showIntroVideo: true, manualLivenessCapture: false)))
         } else if faceVariant == "PHOTO" {
             onfidoConfig = onfidoConfig.withFaceStep(ofVariant: .photo(withConfiguration: nil))
+        } else if faceVariant == "MOTION" {
+            onfidoConfig = onfidoConfig.withFaceStep(ofVariant: .motion)
         } else {
             throw NSError(domain: "Invalid or unsupported face variant", code: 0)
         }
