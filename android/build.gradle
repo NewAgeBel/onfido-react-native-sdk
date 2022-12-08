@@ -10,7 +10,7 @@
 //   original location:
 //   - https://github.com/facebook/react-native/blob/0.58-stable/local-cli/templates/HelloWorld/android/app/build.gradle
 
-def DEFAULT_COMPILE_SDK_VERSION = 31
+def DEFAULT_COMPILE_SDK_VERSION = 32
 def DEFAULT_MIN_SDK_VERSION = 21
 def DEFAULT_TARGET_SDK_VERSION = 31
 
@@ -78,7 +78,7 @@ android {
     buildFeatures {
         buildConfig = false
     }
-
+  
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -109,6 +109,9 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:3.8.0"
     // Fix for crash due to 'java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/swiperefreshlayout/widget/SwipeRefreshLayout;''
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    // The following 2 dependencies are needed for NFC
+    implementation "net.sf.scuba:scuba-sc-android:0.0.23"
+    implementation "org.jmrtd:jmrtd:0.7.32"
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'

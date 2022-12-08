@@ -5,7 +5,6 @@
 //  Created by Santana, Luis on 2/27/20.
 //  Copyright © 2020 Onfido. All rights reserved.
 //
-
 import Foundation
 import Onfido
 
@@ -20,14 +19,14 @@ public class AppearancePublic: NSObject {
         primaryColor: UIColor,
         primaryTitleColor: UIColor,
         primaryBackgroundPressedColor: UIColor,
-        buttonCornerRadius: CGFloat,
+                buttonCornerRadius: CGFloat,
         supportDarkMode: Bool = true) {
             self.primaryColor = primaryColor
             self.primaryTitleColor = primaryTitleColor
             self.primaryBackgroundPressedColor = primaryBackgroundPressedColor
             self.buttonCornerRadius = buttonCornerRadius
-        self.supportDarkMode = supportDarkMode
-    }
+            self.supportDarkMode = supportDarkMode
+        }
 }
 
 /**
@@ -54,8 +53,8 @@ public func loadAppearancePublicFromFile(filePath: String?) throws -> Appearance
             let primaryBackgroundPressedColor: UIColor = (jsonResult["onfidoPrimaryButtonColorPressed"] == nil)
             ? UIColor.primaryButtonColorPressed : UIColor.from(hex: jsonResult["onfidoPrimaryButtonColorPressed"] as! String)
             let buttonCornerRadius: CGFloat = (jsonResult["onfidoIosButtonCornerRadius"] == nil)
-                  ? 5 : jsonResult["onfidoIosButtonCornerRadius"] as! CGFloat
-          let supportDarkMode: Bool = (jsonResult["onfidoIosSupportDarkMode"] == nil)
+                ? 5 : jsonResult["onfidoIosButtonCornerRadius"] as! CGFloat
+            let supportDarkMode: Bool = (jsonResult["onfidoIosSupportDarkMode"] == nil)
             ? true : jsonResult["onfidoIosSupportDarkMode"] as! Bool
 
 
@@ -63,7 +62,7 @@ public func loadAppearancePublicFromFile(filePath: String?) throws -> Appearance
                 primaryColor: primaryColor,
                 primaryTitleColor: primaryTitleColor,
                 primaryBackgroundPressedColor: primaryBackgroundPressedColor,
-                  buttonCornerRadius: buttonCornerRadius,
+                    buttonCornerRadius: buttonCornerRadius,
                 supportDarkMode: supportDarkMode
             )
             return appearancePublic
@@ -154,10 +153,15 @@ public func buildOnfidoConfig(config:NSDictionary, appearance: Appearance) throw
         } else if faceVariant == "PHOTO" {
             onfidoConfig = onfidoConfig.withFaceStep(ofVariant: .photo(withConfiguration: nil))
         } else if faceVariant == "MOTION" {
-            onfidoConfig = onfidoConfig.withFaceStep(ofVariant: .motion)
-        } else {
+            onfidoConfig = onfidoConfig.withFaceStep(ofVariant: .motion(withConfiguration: nil))
+        }
+        else {
             throw NSError(domain: "Invalid or unsupported face variant", code: 0)
         }
+    }
+
+    if config["enableNFC"] as? Bool == true {
+        onfidoConfig = onfidoConfig.withNFCReadFeatureEnabled()
     }
 
     if let hideLogo = config["hideLogo"] as? Bool {

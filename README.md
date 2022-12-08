@@ -11,7 +11,7 @@
   - [2. Creating an Applicant](#2-creating-an-applicant)
   - [3. Configuring SDK with Tokens](#3-configuring-sdk-with-tokens)
   - [4. Adding the Onfido React Native SDK to your project](#4-adding-the-onfido-react-native-sdk-to-your-project)
-    - [This SDK supports React Native versions 0.60.0 and later](#this-sdk-supports-react-native-versions-0600-and-later)
+    - [This SDK supports React Native versions 0.68.2 and later](#this-sdk-supports-react-native-versions-0600-and-later)
     - [4.1 Adding SDK dependency through npm](#41-adding-sdk-dependency-through-npm)
     - [4.2 Update your Android build.gradle files](#42-update-your-android-buildgradle-files)
     - [4.3 Update your iOS configuration files](#43-update-your-ios-configuration-files)
@@ -40,6 +40,10 @@ This SDK provides a drop-in set of screens and tools for react native applicatio
 * Modular design to help you seamlessly integrate the photo/video-capturing process into your application flow
 * Advanced image quality detection technology to ensure the quality of the captured images meets the requirement of the Onfido identity verification process, guaranteeing the best success rate
 * Direct image upload to the Onfido service, to simplify integration\*
+
+> ℹ️ 
+> 
+> If you are integrating using Onfido Studio please see our [Studio integration guide](ONFIDO_STUDIO.md)
 
 \* **Note**: the SDK is only responsible for capturing and uploading photos/videos. You still need to access the [Onfido API](https://documentation.onfido.com/) to create and manage checks.
 
@@ -98,7 +102,7 @@ The `application_id` is the "Application ID" or "Bundle ID" that was already set
 
 ### 4. Adding the Onfido React Native SDK to your project
 
-#### This SDK supports React Native versions 0.60.0 and later
+#### This SDK supports React Native versions 0.68.2 and later
 
 If you are starting from scratch, you can follow the React Native CLI Quickstart https://reactnative.dev/docs/getting-started.  For examples, once you have installed the React Native tools, you can run:
 ```shell
@@ -184,26 +188,6 @@ pod install
 cd ..
 ```
 
-#### 4.4 Fix dependency conflict between React Native and Onfido Android SDK
-
-When using React Native version <= 0.64.0 there is a dependency conflict with okhttp3 on Android that can cause requests from outside of the Onfido SDK to fail. To fix this you can add the following code to `android/app/build.gradle`:
-
-```
-android {
-    configurations.all {
-        resolutionStrategy {
-            eachDependency { DependencyResolveDetails details ->
-                if (!details.requested.name.contains('onfido')) {
-                    if (details.requested.group == 'com.squareup.okhttp3') {
-                        details.useVersion '4.9.0'
-                    }
-                }
-            }
-        }
-    }
-}
-```
-
 This will allow the Onfido SDK to use okhttp3 v4.9.0 while still using the React Native version defined elsewhere in your app.
 
 ## Usage
@@ -269,6 +253,7 @@ config = {
       type: OnfidoCaptureType.VIDEO
     },
   },
+  enableNFC: true
 }
 ```
 
@@ -284,9 +269,11 @@ config = {
     **Note**: `GENERIC` document type doesn't offer an optimised capture experience for a desired document type.
 * **`countryCode`**: Required if docType is specified.
   * Valid values in `OnfidoCountryCode`: Any ISO 3166-1 alpha-3 code. For example: `OnfidoCountryCode.USA`.
+* **`enableNFC`**: Optional. This toggles the ePassport NFC extraction feature. If omitted, this feature is not enabled in the flow. There is also application configuration changes needed to use this feature. To do that please follow [Onfido Developer Hub](#https://developers.onfido.com/guide/document-report-nfc#enable-nfc-in-the-onfido-sdks)
+  * Valid values: `true`, `false`.
 * **`captureFace`**: Optional.  This object object containing options for capture face screen.  If omitted, this screen does not appear in the flow.
 * **`type`**: Required if captureFace is specified.
-  * Valid values in `OnfidoCaptureType`: `PHOTO`, `VIDEO`.
+  * Valid values in `OnfidoCaptureType`: `PHOTO`, `VIDEO`, `MOTION`.
 * **`localisation`**: Optional. This object contains localisation configuration. See section [Localization](#localization) for the details.
   * Example usage:
 

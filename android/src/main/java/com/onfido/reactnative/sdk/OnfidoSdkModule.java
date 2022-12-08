@@ -16,6 +16,12 @@ import com.onfido.android.sdk.capture.OnfidoConfig;
 import com.onfido.android.sdk.capture.OnfidoFactory;
 import com.onfido.android.sdk.capture.errors.EnterpriseFeatureNotEnabledException;
 import com.onfido.android.sdk.capture.errors.EnterpriseFeaturesInvalidLogoCobrandingException;
+import com.onfido.android.sdk.capture.errors.EnterpriseFeatureNotEnabledException;
+import com.onfido.android.sdk.capture.errors.EnterpriseFeaturesInvalidLogoCobrandingException;
+import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureStep;
+import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureVariant;
+import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureVariantPhoto;
+import com.onfido.android.sdk.capture.ui.camera.face.FaceCaptureVariantVideo;
 import com.onfido.android.sdk.capture.ui.camera.face.stepbuilder.FaceCaptureStepBuilder;
 import com.onfido.android.sdk.capture.ui.options.CaptureScreenStep;
 import com.onfido.android.sdk.capture.ui.options.FlowStep;
@@ -158,6 +164,10 @@ public class OnfidoSdkModule extends ReactContextBaseJavaModule {
             onfidoConfigBuilder.withEnterpriseFeatures(enterpriseFeaturesBuilder.build());
         }
 
+        if(getBooleanFromConfig(config, "enableNFC")) {
+            onfidoConfigBuilder.withNFCReadFeature();
+        }
+
         client.startActivityForResult(currentActivity,
                 OnfidoSdkActivityEventListener.checksActivityCode,
                 onfidoConfigBuilder.build());
@@ -244,9 +254,9 @@ public class OnfidoSdkModule extends ReactContextBaseJavaModule {
                 if (captureFaceTypeExists) {
                     final String captureFaceType = captureFace.getString("type");
                     if (captureFaceType.equals("PHOTO")) {
-                        flowStepList.add(FaceCaptureStepBuilder.forPhoto().build());
+                        flowStepList.add(new FaceCaptureStep(new FaceCaptureVariantPhoto()));
                     } else if (captureFaceType.equals("VIDEO")) {
-                        flowStepList.add(FaceCaptureStepBuilder.forVideo().build());
+                        flowStepList.add(new FaceCaptureStep(new FaceCaptureVariantVideo()));
                     } else if (captureFaceType.equals("MOTION")) {
                         flowStepList.add(FaceCaptureStepBuilder.forMotion().build());
                     } else {
@@ -254,7 +264,7 @@ public class OnfidoSdkModule extends ReactContextBaseJavaModule {
                     }
                 } else {
                     // Default face capture type is photo.
-                    flowStepList.add(FaceCaptureStepBuilder.forPhoto().build());
+                    flowStepList.add(new FaceCaptureStep(new FaceCaptureVariantPhoto()));
                 }
             }
 
