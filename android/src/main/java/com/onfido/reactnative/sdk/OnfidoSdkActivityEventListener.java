@@ -13,7 +13,7 @@ import com.onfido.android.sdk.capture.ExitCode;
 import com.onfido.android.sdk.capture.Onfido;
 import com.onfido.android.sdk.capture.upload.Captures;
 import com.onfido.android.sdk.capture.errors.OnfidoException;
-import com.onfido.android.sdk.workflow.OnfidoWorkflow;
+import com.onfido.workflow.OnfidoWorkflow;
 
 class OnfidoSdkActivityEventListener extends BaseActivityEventListener {
 
@@ -23,6 +23,7 @@ class OnfidoSdkActivityEventListener extends BaseActivityEventListener {
 
     static final int workflowActivityCode = 102030;
     static final int checksActivityCode = 102040;
+
 
     public OnfidoSdkActivityEventListener(final Onfido client) {
         this.client = client;
