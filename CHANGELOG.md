@@ -4,13 +4,81 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## next-version
+## [8.1.0] - 2023-03-06
+
+### Changed:
+- Public: Updated underlying Onfido native SDKs versions:
+  - iOS 28.1.0 (up from 28.0.0)
+  - Android 16.1.0 (up from 16.0.1)
+- Underlying Onfido native SDKs versions are now less strict and will allow
+  patch versions updates
+
+## [8.0.0] - 2023-02-28
+
+### Changed:
+- Public: Updated underlying Onfido native SDKs versions:
+  - iOS 28.0.0 (up from 27.4.0)
+  - Android 16.0.1 (up from 15.4.0)
+
+## [7.4.0] - 2023-02-13
+
+### Changed:
+- Public: Updated underlying Onfido native SDKs versions:
+  - iOS 27.4.0 (up from 27.3.0)
+  - Android 15.4.0 (up from 15.3.0)
+
+## [7.3.0] - 2023-01-12
+
+### Changed:
+- Public: Updated underlying Onfido native SDKs versions:
+  - iOS 27.3.0 (up from 27.2.0)
+  - Android 15.3.0 (up from 15.1.0)
+
+## [7.2.0] - 2022-12-23
+
+### Added
+
+- Public: Extended localisation support to 44 languages
+- Public: Added RTL languages support
+
+### Changed:
+- Public: Update underlying Onfido native SDK versions:
+  - iOS 27.2.0 (up from 27.0.0)
+  - Android 15.1.0 (up from 14.0.0)
+
+### Fixed:
+
+- Public: Remove NFC dependencies from the SDK. They should be added in your app when utilizing NFC. 
+
+## [7.1.0] - 2022-12-07
+
+### Added:
+
+- Public: Added NFC support
+- Public: Added support for new OnfidoCaptureType - MOTION
+
+## [7.0.1] - 2022-11-28
+
+### Changed:
+- Public: Update underlying Onfido native SDK versions:
+  - iOS 27.0.0 (up from 26.1.1)
+  - Android 14.0.0 (up from 13.0.0)
+- Public: Fixes on Typescript issues
+- Public: Upgrade min supported version to 0.68.2 (up from 0.60.0)
+
+## [6.1.0] - 2022-11-07
+
+### Changed:
+- Public: Update underlying Onfido native SDK versions:
+  - iOS 26.1.1 (up from 26.0.1)
+- Public: Start supporting Typescript
+- Public: Fix iOS build on older Xcode versions
 
 ## [6.0.0] - 2022-09-13
 
 ### Changed:
 - Public: Update underlying Onfido native SDK versions:
-  - Android 13.1.0 (up from 12.2.0)
+  - Android 13.0.0 (up from 12.2.0)
   - iOS 26.0.1 (up from 25.1.0)
 - Public: Update supported React version to latest
 - Public: Fixed Android build with Java issues
@@ -18,7 +86,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [5.4.0] - 2022-06-22
 
 ### Changed:
-- Public: 
+- Public:
 - Public: Update underlying Onfido native SDK versions:
   - Android 12.2.0 (up from 11.5.0)
   - iOS 25.1.0 (up from 24.6.0)

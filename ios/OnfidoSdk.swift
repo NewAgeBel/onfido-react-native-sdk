@@ -9,6 +9,7 @@ import Foundation
 import Onfido
 
 public class AppearancePublic: NSObject {
+
     public let primaryColor: UIColor
     public let primaryTitleColor: UIColor
     public let primaryBackgroundPressedColor: UIColor
@@ -19,12 +20,12 @@ public class AppearancePublic: NSObject {
         primaryColor: UIColor,
         primaryTitleColor: UIColor,
         primaryBackgroundPressedColor: UIColor,
-                buttonCornerRadius: CGFloat,
+                        buttonCornerRadius: CGFloat,
         supportDarkMode: Bool = true) {
             self.primaryColor = primaryColor
             self.primaryTitleColor = primaryTitleColor
             self.primaryBackgroundPressedColor = primaryBackgroundPressedColor
-            self.buttonCornerRadius = buttonCornerRadius
+                        self.buttonCornerRadius = buttonCornerRadius
             self.supportDarkMode = supportDarkMode
         }
 }
@@ -62,7 +63,7 @@ public func loadAppearancePublicFromFile(filePath: String?) throws -> Appearance
                 primaryColor: primaryColor,
                 primaryTitleColor: primaryTitleColor,
                 primaryBackgroundPressedColor: primaryBackgroundPressedColor,
-                    buttonCornerRadius: buttonCornerRadius,
+                                    buttonCornerRadius: buttonCornerRadius,
                 supportDarkMode: supportDarkMode
             )
             return appearancePublic
@@ -186,7 +187,23 @@ public func buildOnfidoFlow(from config: NSDictionary) throws -> OnfidoFlow {
     let sdkToken = config["sdkToken"] as! String
 
     if let workflowRunId = config["workflowRunId"] as? String {
+        let enterpriseFeatures = EnterpriseFeatures.builder()
+
+        if let hideLogo = config["hideLogo"] as? Bool {
+            enterpriseFeatures.withHideOnfidoLogo(hideLogo)
+        }
+
+        if config["logoCobrand"] as? Bool == true {
+               if let cobrandLogoLight = UIImage(named: "cobrand-logo-light"), 
+               let cobrandLogoDark = UIImage(named: "cobrand-logo-dark") {
+                enterpriseFeatures.withCobrandingLogo(cobrandLogoLight, cobrandingLogoDarkMode: cobrandLogoDark)
+            } else {
+                throw NSError(domain: "Cobrand logos were not found", code: 0)
+            }
+        }
+
         let workflowConfig = WorkflowConfiguration(workflowRunId: workflowRunId, sdkToken: sdkToken)
+        workflowConfig.enterpriseFeatures = enterpriseFeatures.build()
         workflowConfig.appearance = appearance
 
         if let localisationFile = getLocalisationConfigFileName(from: config) {

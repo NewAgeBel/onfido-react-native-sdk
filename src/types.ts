@@ -558,8 +558,8 @@ export type OnfidoResult = {
 
 export type OnfidoConfig = {
   sdkToken: string;
-  flowSteps: OnfidoFlowSteps;
   workflowRunId?: string | null | undefined;
+  flowSteps: OnfidoFlowSteps;
   hideLogo?: boolean;
   logoCoBrand?: boolean;
   enableNFC?: boolean;
