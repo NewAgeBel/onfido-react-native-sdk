@@ -15,18 +15,24 @@ public class AppearancePublic: NSObject {
     public let primaryBackgroundPressedColor: UIColor
     public let buttonCornerRadius: CGFloat
     public let supportDarkMode: Bool
+    public let fontRegular: String
+    public let fontBold: String
 
     public init(
         primaryColor: UIColor,
         primaryTitleColor: UIColor,
         primaryBackgroundPressedColor: UIColor,
                         buttonCornerRadius: CGFloat,
-        supportDarkMode: Bool = true) {
+        supportDarkMode: Bool = true,
+        fontRegular: String,
+        fontBold: String) {
             self.primaryColor = primaryColor
             self.primaryTitleColor = primaryTitleColor
             self.primaryBackgroundPressedColor = primaryBackgroundPressedColor
                         self.buttonCornerRadius = buttonCornerRadius
             self.supportDarkMode = supportDarkMode
+            self.fontRegular = fontRegular
+            self.fontBold = fontBold
         }
 }
 
@@ -57,14 +63,17 @@ public func loadAppearancePublicFromFile(filePath: String?) throws -> Appearance
                 ? 5 : jsonResult["onfidoIosButtonCornerRadius"] as! CGFloat
             let supportDarkMode: Bool = (jsonResult["onfidoIosSupportDarkMode"] == nil)
             ? true : jsonResult["onfidoIosSupportDarkMode"] as! Bool
-
+            let fontRegular: String = jsonResult["onfidoIosFontRegular"] as! String;
+            let fontBold: String = jsonResult["onfidoIosFontBold"] as! String;
 
             let appearancePublic = AppearancePublic(
                 primaryColor: primaryColor,
                 primaryTitleColor: primaryTitleColor,
                 primaryBackgroundPressedColor: primaryBackgroundPressedColor,
                                     buttonCornerRadius: buttonCornerRadius,
-                supportDarkMode: supportDarkMode
+                supportDarkMode: supportDarkMode,
+                fontRegular: fontRegular,
+                fontBold: fontBold
             )
             return appearancePublic
         } else {
@@ -87,6 +96,8 @@ public func loadAppearanceFromFile(filePath: String?) throws -> Appearance {
         appearance.primaryBackgroundPressedColor = appearancePublic.primaryBackgroundPressedColor
         appearance.buttonCornerRadius = appearancePublic.buttonCornerRadius
         appearance.supportDarkMode =  appearancePublic.supportDarkMode
+        appearance.fontRegular = appearancePublic.fontRegular
+        appearance.fontBold = appearancePublic.fontBold
         return appearance
     } else {
         return Appearance.default;
