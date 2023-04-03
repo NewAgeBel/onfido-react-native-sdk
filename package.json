@@ -1,7 +1,7 @@
 {
   "name": "@newagebel/react-native-onfido-sdk",
   "title": "React Native Onfido Sdk",
-  "version": "8.1.1",
+  "version": "8.1.2",
   "description": "Onfido React Native SDK",
   "main": "index.ts",
   "scripts": {
