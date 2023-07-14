@@ -18,6 +18,13 @@ export const OnfidoCaptureType = {
 
 export type OnfidoCaptureType = typeof OnfidoCaptureType[keyof typeof OnfidoCaptureType];
 
+export const OnfidoFaceCaptureOptions = {
+  VIDEO_CAPTURE_FALLBACK: 'videoCaptureFallback',
+  PHOTO_CAPTURE_FALLBACK: 'photoCaptureFallback',
+} as const;
+
+export type OnfidoFaceCaptureOptions = typeof OnfidoFaceCaptureOptions[keyof typeof OnfidoFaceCaptureOptions];
+
 export const OnfidoCountryCode = {
   ABW: 'ABW',
   AFG: 'AFG',
@@ -538,6 +545,7 @@ export type OnfidoFlowSteps = {
   };
   captureFace?: {
     type: OnfidoCaptureType;
+    options?: OnfidoFaceCaptureOptions;
   };
 };
 
