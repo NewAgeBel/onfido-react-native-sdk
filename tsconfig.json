@@ -23,5 +23,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext"
-  }
+  },
+  "include": ["./js"],
+  "exclude": ["./SampleApp", "./TestApp"]
 }

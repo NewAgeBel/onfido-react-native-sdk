@@ -3,11 +3,12 @@
 //
 //  Copyright © 2016-2023 Onfido. All rights reserved.
 //
+
 import Onfido
 
 class CallbackReceiver {
     private let onMediaCallback: (([String: Any]) -> Void)?
-
+    
     init(withCallback callback: (([String: Any]) -> Void)?) {
         onMediaCallback = callback
     }

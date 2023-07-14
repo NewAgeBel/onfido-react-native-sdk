@@ -11,6 +11,7 @@ The SDK communicates directly and dynamically with active workflows to show the 
 > 
 > The following guide will help you to integrate with Onfido Studio.
 > If you are looking for the standard integration using Onfido checks, please head to our [README](https://github.com/onfido/react-native-sdk).
+
 ## Getting started 
 
 The SDK supports:

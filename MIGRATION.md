@@ -51,15 +51,19 @@ type OnfidoFaceSelfieCapture = {
   type: OnfidoCaptureType.PHOTO;
   showIntro?: boolean
 };
+
 type OnfidoFaceVideoCapture = {
   type: OnfidoCaptureType.VIDEO;
   showIntro?: boolean;
   showConfirmation?: boolean;
   manualVideoCapture?: boolean;
 };
+
 type OnfidoFaceMotionCapture = {
     type: OnfidoCaptureType.MOTION;
     recordAudio?: boolean;
     motionCaptureFallback?: OnfidoFaceSelfieCapture | OnfidoFaceVideoCapture;
 };
 ```
+
+

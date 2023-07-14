@@ -3,6 +3,7 @@
 //
 //  Copyright © 2016-2023 Onfido. All rights reserved.
 //
+
 import Foundation
 
 struct OnfidoPluginConfig: Codable {
@@ -38,7 +39,7 @@ struct OnfidoCaptureFace: Codable {
 
 struct OnfidoLocalisation: Codable {
     let stringsFileName: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case stringsFileName = "ios_strings_file_name"
     }
@@ -65,7 +66,7 @@ struct OnfidoAppearanceConfig: Codable {
     let primaryButtonTextColorHex: String?
     let primaryButtonColorPressedHex: String?
     let supportsDarkMode: Bool?
-
+    
     enum CodingKeys: String, CodingKey {
         case primaryColorHex = "onfidoPrimaryColor"
         case primaryButtonTextColorHex = "onfidoPrimaryButtonTextColor"

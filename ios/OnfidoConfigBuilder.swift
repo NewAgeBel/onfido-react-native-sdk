@@ -3,6 +3,7 @@
 //
 //  Copyright © 2016-2023 Onfido. All rights reserved.
 //
+
 import Foundation
 import Onfido
 
@@ -11,7 +12,7 @@ struct OnfidoConfigBuilder {
         case classic(configBuilder: Onfido.OnfidoConfigBuilder)
         case studio(workflowConfig: Onfido.WorkflowConfiguration)
     }
-
+    
     func build(
         config: OnfidoPluginConfig,
         appearance: Appearance,
@@ -20,7 +21,7 @@ struct OnfidoConfigBuilder {
         guard let workflowId = config.workflowRunId else {
             return try buildClassic(config: config, appearance: appearance, mediaCallBack: mediaCallBack)
         }
-
+        
         return try buildStudio(
             workflowId: workflowId,
             config: config,
@@ -28,7 +29,7 @@ struct OnfidoConfigBuilder {
             mediaCallBack: mediaCallBack
         )
     }
-
+    
     // MARK: - Studio
     
     private func buildStudio(
@@ -38,27 +39,27 @@ struct OnfidoConfigBuilder {
         mediaCallBack: CallbackReceiver?
     ) throws -> OnfidoMode {
         var workflowConfig = WorkflowConfiguration(workflowRunId: workflowId, sdkToken: config.sdkToken)
-
+        
         // Enterprise features
         let enterpriseFeatures = try enterptiseFeatures(for: config)
         workflowConfig = workflowConfig.withEnterpriseFeatures(enterpriseFeatures)
-
+        
         // Appearance
         workflowConfig = workflowConfig.withAppearance(appearance)
-
+        
         // Localization
         if let localizationFile = try customLocalization(config: config) {
             workflowConfig = workflowConfig.withCustomLocalization(withTableName: localizationFile, in: .main)
         }
-
+        
         // Media Callback
         if let mediaCallBack {
             workflowConfig = workflowConfig.withMediaCallback(mediaCallback: mediaCallBack)
          }
-
+        
         return .studio(workflowConfig: workflowConfig)
     }
-
+    
     // MARK: - Classic
     
     private func buildClassic(
@@ -69,44 +70,44 @@ struct OnfidoConfigBuilder {
         let builder = OnfidoConfig.builder()
             .withSDKToken(config.sdkToken)
             .withAppearance(appearance)
-
+        
         // Flow steps
         try configureClassicSteps(builder: builder, config: config)
-
+        
         // Enterprise features
         let enterpriseFeatures = try enterptiseFeatures(for: config)
         builder.withEnterpriseFeatures(enterpriseFeatures)
-
+        
         // NFC
         if let enableNFC = config.enableNFC, enableNFC == true {
             builder.withNFCReadFeatureEnabled()
         }
-
+        
         // Localization
         if let localizationFile = try customLocalization(config: config) {
             builder.withCustomLocalization(andTableName: localizationFile)
         }
-
+        
         // Media Callback
         if let mediaCallBack {
             builder.withMediaCallback(mediaCallback: mediaCallBack)
         }
-
+        
         return .classic(configBuilder: builder)
     }
-
+    
     private func configureClassicSteps(builder: Onfido.OnfidoConfigBuilder, config: OnfidoPluginConfig) throws {
         guard let steps = config.flowSteps else { return }
-
+        
         // Welcome
         if let hasWelcome = steps.welcome, hasWelcome == true {
             builder.withWelcomeStep()
         }
-
+        
         try configureDocumentStep(builder: builder, steps: steps)
         configureBioStep(builder: builder, steps: steps)
     }
-
+    
     // MARK: - Document step
     
     private func configureDocumentStep(builder: Onfido.OnfidoConfigBuilder, steps: OnfidoFlowSteps) throws {
@@ -165,7 +166,7 @@ struct OnfidoConfigBuilder {
             builder.withDocumentStep()
         }
     }
-
+    
     // MARK: - Bio step
     
     private func configureBioStep(builder: Onfido.OnfidoConfigBuilder, steps: OnfidoFlowSteps) {
@@ -223,16 +224,16 @@ struct OnfidoConfigBuilder {
             }
         }
     }
-
+    
     // MARK: - Enterptise features
     
     private func enterptiseFeatures(for config: OnfidoPluginConfig) throws -> EnterpriseFeatures {
         let enterpriseFeatures = EnterpriseFeatures.builder()
-
+        
         if let hideLogo = config.hideLogo {
             enterpriseFeatures.withHideOnfidoLogo(hideLogo)
         }
-
+        
         if let logoCoBrand = config.logoCoBrand, logoCoBrand == true {
             guard let cobrandLogo = UIImage(named: "cobrand-logo-light"),
                   let cobrandLogoDark = UIImage(named: "cobrand-logo-dark")
@@ -241,42 +242,42 @@ struct OnfidoConfigBuilder {
             }
             enterpriseFeatures.withCobrandingLogo(cobrandLogo, cobrandingLogoDarkMode: cobrandLogoDark)
         }
-
+        
         return enterpriseFeatures.build()
     }
-
+    
     // MARK: - Localisation
     
     private func customLocalization(config: OnfidoPluginConfig) throws -> String? {
         return config.localisation?.stringsFileName
     }
-
+    
     // MARK: - Helpers
     
     private func colorFrom(hex: String?, fallback: UIColor) -> UIColor {
         guard let hex else { 
             return fallback 
         }
-
+        
         let hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         let scanner = Scanner(string: hexString)
-
+        
         if hexString.hasPrefix("#") {
             scanner.scanLocation = 1
         }
-
+        
         var color: UInt32 = 0
         scanner.scanHexInt32(&color)
-
+        
         let mask = 0x000000ff
         let redInt = Int(color >> 16) & mask
         let greenInt = Int(color >> 8) & mask
         let blueInt = Int(color) & mask
-
+        
         let red = CGFloat(redInt) / 255.0
         let green = CGFloat(greenInt) / 255.0
         let blue = CGFloat(blueInt) / 255.0
-
+        
         return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
 }
