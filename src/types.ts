@@ -18,12 +18,28 @@ export const OnfidoCaptureType = {
 
 export type OnfidoCaptureType = typeof OnfidoCaptureType[keyof typeof OnfidoCaptureType];
 
-export const OnfidoFaceCaptureOptions = {
-  VIDEO_CAPTURE_FALLBACK: 'videoCaptureFallback',
-  PHOTO_CAPTURE_FALLBACK: 'photoCaptureFallback',
-} as const;
+export type OnfidoFaceCapture =
+  | OnfidoFaceSelfieCapture
+  | OnfidoFaceVideoCapture
+  | OnfidoFaceMotionCapture
 
-export type OnfidoFaceCaptureOptions = typeof OnfidoFaceCaptureOptions[keyof typeof OnfidoFaceCaptureOptions];
+export type OnfidoFaceSelfieCapture = {
+  type: 'PHOTO';
+  showIntro?: boolean
+};
+
+export type OnfidoFaceVideoCapture = {
+  type: 'VIDEO';
+  showIntro?: boolean;
+  showConfirmation?: boolean;
+  manualVideoCapture?: boolean;
+};
+
+export type OnfidoFaceMotionCapture = {
+    type: 'MOTION';
+    recordAudio?: boolean;
+    motionCaptureFallback?: OnfidoFaceSelfieCapture | OnfidoFaceVideoCapture;
+};
 
 export const OnfidoCountryCode = {
   ABW: 'ABW',
@@ -542,12 +558,38 @@ export type OnfidoFlowSteps = {
     countryCode?: OnfidoCountryCode;
     alpha2CountryCode?: OnfidoAlpha2CountryCode;
     docType?: OnfidoDocumentType;
+    allowedDocumentTypes?: [OnfidoDocumentType]
   };
-  captureFace?: {
-    type: OnfidoCaptureType;
-    options?: OnfidoFaceCaptureOptions;
-  };
+  captureFace?: OnfidoFaceCapture;
 };
+
+export interface OnfidoMediaResult {
+}
+
+export interface OnfidoDocumentResult extends OnfidoMediaResult {
+  fileData: OnfidoMediaFile;
+  documentMetadata: OnfidoDocumentMetadata;
+}
+
+export interface OnfidoLivenessResult extends OnfidoMediaResult {
+  fileData: OnfidoMediaFile;
+}
+
+export interface OnfidoSelfieResult extends OnfidoMediaResult {
+  fileData: OnfidoMediaFile;
+}
+
+export type OnfidoDocumentMetadata = {
+  side: string;
+  type: string;
+  issuingCountry?: string;
+}
+
+export type OnfidoMediaFile = {
+  fileData: string;
+  fileType: string;
+  fileName: string;
+}
 
 export type OnfidoResult = {
   document?: {
