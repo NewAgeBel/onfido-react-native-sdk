@@ -1,95 +1,33 @@
-# Sample App for @onfido/react-native-sdk
+README
+======
 
-## Summary
+If you want to publish the lib as a maven dependency, follow these steps before publishing a new version to npm:
 
-You can use this sample app to test the React Native SDK and get an idea of how to integrate with it.
+1. Be sure to have the Android [SDK](https://developer.android.com/studio/index.html) and [NDK](https://developer.android.com/ndk/guides/index.html) installed
+2. Be sure to have a `local.properties` file in this folder that points to the Android SDK and NDK
+```
+ndk.dir=/Users/{username}/Library/Android/sdk/ndk-bundle
+sdk.dir=/Users/{username}/Library/Android/sdk
+```
+3. Run `./gradlew publishToMavenLocal`
+4. Go to the `~/.m2` directory. Verify that the pom file was generated successfully with the correct version.
 
-## Install the required tools
 
-### Install required Android tools
+How to quickly develop the Android Java code using the TestApp:
+======
+React Native's "Fast Refresh" feature will not update Java code as you make changes, and reinstalling all npm packages is slow.  Instead, you can follow this process to recompile only the Java code when you make changes.
 
-Make sure you have installed:
-- node (https://nodejs.org/en/download/)
-- watchman (`brew install watchman`)
-- [JDK 8 or newer](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-- [Android Studio](https://developer.android.com/studio/index.html), configured as specified in [the react-native guide for Android](https://facebook.github.io/react-native/docs/getting-started.html#android-development-environment)
-- Open `AVD Manager` in `Android Studio`, Click `+ Add Device` and install `Marshmallow 23 x86_64` image.
-
-Set up your device:
-- To run on a physical device, [enable debugging, and plug it in](https://facebook.github.io/react-native/docs/running-on-device.html#1-enable-debugging-over-usb)
-- To run on an emulator, [ensure you have an AVD created](https://facebook.github.io/react-native/docs/getting-started.html#using-a-virtual-device), and running (or follow instructions below on how to use custom commands for managing AVDs)
-
-### Install required iOS tools
-
-Make sure you have installed:
-- node (https://nodejs.org/en/download/)
-- Xcode 10+ (https://developer.apple.com/download/)
-- watchman (`brew install watchman`)
-- pods (`gem install cocoapods`)
-
-Set up your device:
-- Follow the [official documentation](https://facebook.github.io/react-native/docs/running-on-device) to setup and run app within a physical device
-
-## Step 1: Setup
-
-### Set up the API Token
-Before running the sample app you will need to open SampleApp/backend-server-example.js and replace 'YOUR_API_TOKEN_HERE' with your API token. You can use our [sandbox](https://documentation.onfido.com/#sandbox-testing) environment to test the integration, and you will find the API tokens inside your [Onfido Dashboard](https://onfido.com/dashboard/api/tokens). You can create API tokens inside your Onfido Dashboard as well.
-
-| :warning: Do not use your API token in your client code.  This server code is only included here as an example. |
-| --- |
-
-## Step 2: Build and run the sample app
-All commands should start in the `SampleApp/` directory:
+In one console, from the `TestApp/` directory, run the following commands.  It may take 2 or more minutes to build.  You only need to run this once: leave it running in the background while you develop.
 ```shell
-cd SampleApp
+rm -rf node_modules/ && yarn && cd .. && watchman watch-del-all && npx react-native start --reset-cache
 ```
 
-In one console, run the following to install the necessary packages, run the build, and start the server.  It may take 2 or more minutes to build.  
+In a second console, from the `TestApp/` directory, update the Android package and launch the virtual device.  Run this each time you change Android code.
 ```shell
-yarn && cd ios && pod install && cd .. && watchman watch-del-all && npx react-native start --reset-cache
+rsync -av ../ node_modules/@onfido/react-native-sdk/ --exclude=TestApp --exclude=SampleApp --exclude=node_modules --exclude=android/build --exclude=.git && npx react-native run-android
 ```
 
-Open a second console.  Launch the iOS app:
-```shell
-npx react-native run-ios
-```
-
-Launch the Android app:
-```shell
-npx react-native run-android
-```
-
-# Testing the code
-
-## Unit
-
-`yarn test` will kick off the unit tests.
-
-## End-to-end
-
-We have end-to-end tests that run through the app on emulator.
-
-### Android
-
-Create an emulator (naming **"Detox_Emulator"** is important):
-
-    yarn create-avd -n Detox_Emulator
-
-In one terminal window compile the code for end-to-end testing:
-
-    yarn start-e2e-android-sampleapp
-
-In another boot the Android emulator & automated tests:
-
-    yarn test-e2e-android-debug-sampleapp
-
-
-## Set up custom colors
-You can change the colors in SampleApp/colors.json if you wish to customize the sample app but, this is not required.
-
-After changing the colors, run the following to apply your changes to your Android build:
-```shell
-cd SampleApp
-yarn
-npm --prefix node_modules/@onfido/react-native-sdk/ run updateColors
-```
+How to run the tests
+======
+1. Run "yarn" or "npm install" from the project root.  This will download the React Native Facebook bridge library
+2. Run "./gradlew test" from the "/android" directory.

@@ -8,7 +8,7 @@ import {
     OnfidoError,
     OnfidoMediaResult,
     OnfidoResult
-} from './types';
+} from './config_constants';
 
 const {OnfidoSdk} = NativeModules;
 
