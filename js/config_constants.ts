@@ -621,7 +621,16 @@ export type OnfidoConfig = {
   localisation?: {
     ios_strings_file_name?: string;
   };
+  theme: OnfidoTheme;
 };
+
+export const OnfidoTheme = {
+  LIGHT: "LIGHT",
+  DARK: "DARK",
+  AUTOMATIC: "AUTOMATIC"
+} as const
+
+export type OnfidoTheme = typeof OnfidoTheme[keyof typeof OnfidoTheme];
 
 export interface OnfidoError extends Error {
   code?: string;
