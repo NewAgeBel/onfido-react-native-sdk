@@ -17,7 +17,7 @@ const eventEmitter = new NativeEventEmitter(OndifoSdkModule)
 
 
 const Onfido = {
-    start(config: OnfidoConfig): Promise<OnfidoResult | OnfidoError> {
+    async start(config: OnfidoConfig): Promise<OnfidoResult | OnfidoError> {
 
         if (!config) {
             return configError("config is missing");
